@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
+import com.google.common.collect.ImmutableMap;
+
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -30,12 +32,16 @@ import org.smartregister.anc.fragment.HomeRegisterFragment;
 import org.smartregister.anc.fragment.SortFilterFragment;
 import org.smartregister.anc.presenter.RegisterPresenter;
 import org.smartregister.anc.util.Constants;
+import org.smartregister.anc.util.DBConstants;
 import org.smartregister.anc.view.LocationPickerView;
+import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.configurableviews.model.Field;
 import org.smartregister.domain.FetchStatus;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ndegwamartin on 24/07/2018.
@@ -59,6 +65,10 @@ public class HomeRegisterActivityTest extends BaseActivityUnitTest {
 
     @Mock
     private AlertDialog attentionFlagsAlertDialog;
+
+
+    @Mock
+    private AlertDialog recordBirthAlertDialog;
 
     @Mock
     private RegisterPresenter registerPresenter;
@@ -175,16 +185,22 @@ public class HomeRegisterActivityTest extends BaseActivityUnitTest {
 
     }
 
+
     @Test
     public void testShowRecordBirthPopUpInvokesMethodsOnRecordBirthAlertDialogsCorrectly() {
 
         HomeRegisterActivity homeRegisterActivitySpy = Mockito.spy(homeRegisterActivity);
-        Whitebox.setInternalState(homeRegisterActivitySpy, "attentionFlagAlertDialog", attentionFlagsAlertDialog);
 
-        List<AttentionFlag> testAttentionFlags = Arrays.asList(new AttentionFlag[]{new AttentionFlag("Red Flag 1", true), new AttentionFlag("Red Flag 2", true), new AttentionFlag("Yellow Flag 1", false), new AttentionFlag("Yellow Flag 2", false)});
+        Whitebox.setInternalState(homeRegisterActivitySpy, "recordBirthAlertDialog", recordBirthAlertDialog);
 
-        homeRegisterActivitySpy.showAttentionFlagsDialog(testAttentionFlags);
-        Mockito.verify(attentionFlagsAlertDialog).show();
+        CommonPersonObjectClient client = new CommonPersonObjectClient(DUMMY_BASE_ENTITY_ID, ImmutableMap.of(DBConstants.KEY.FIRST_NAME, DUMMY_USERNAME, DBConstants.KEY.EDD, "2018-12-25"), DUMMY_USERNAME);
+        Map<String, String> details = new HashMap<>();
+        details.putAll(client.getDetails());
+        client.setColumnmaps(details);
+        homeRegisterActivitySpy.showRecordBirthPopUp(client);
+
+        Mockito.verify(recordBirthAlertDialog, Mockito.times(1)).setMessage(ArgumentMatchers.contains("25/12/2018"));
+        Mockito.verify(recordBirthAlertDialog).show();
     }
 
     public void testShowAttentionFlagsAlertDialogPopUpInvokesMethodsOnAttentionFlagsAlertDialogsCorrectly() {
