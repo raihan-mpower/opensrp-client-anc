@@ -7,6 +7,7 @@ import org.smartregister.DristhiConfiguration;
 import org.smartregister.anc.application.AncApplication;
 import org.smartregister.anc.contract.AdvancedSearchContract;
 import org.smartregister.anc.util.AppExecutors;
+import org.smartregister.anc.util.Constants;
 import org.smartregister.domain.Response;
 import org.smartregister.service.HTTPAgent;
 
@@ -21,6 +22,8 @@ public class AdvancedSearchInteractor implements AdvancedSearchContract.Interact
     private HTTPAgent httpAgent;
 
     private DristhiConfiguration dristhiConfiguration;
+    private String[] whoAncId ;
+    private String ancId = "";
 
     public static final String SEARCH_URL = "/rest/search/search";
 
@@ -40,10 +43,14 @@ public class AdvancedSearchInteractor implements AdvancedSearchContract.Interact
             public void run() {
 
                 final Response<String> response = globalSearch(editMap);
+                if (!StringUtils.isEmpty(editMap.get(Constants.GLOBAL_IDENTIFIER))){
+                    whoAncId = editMap.get(Constants.GLOBAL_IDENTIFIER).split(":",2);
+                }
                 appExecutors.mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
-                        callBack.onResultsFound(response);
+                    	if (whoAncId != null) { ancId = whoAncId[1]; }
+                        callBack.onResultsFound(response, ancId);
                     }
                 });
             }

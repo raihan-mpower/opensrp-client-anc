@@ -31,6 +31,6 @@ public interface AdvancedSearchContract {
     }
 
     public interface InteractorCallBack {
-        void onResultsFound(Response<String> response);
+        void onResultsFound(Response<String> response, String ancId);
     }
 }
