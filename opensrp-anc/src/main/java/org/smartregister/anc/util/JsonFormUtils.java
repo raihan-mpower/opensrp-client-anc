@@ -349,7 +349,7 @@ public class JsonFormUtils extends org.smartregister.util.JsonFormUtils {
             }
 
         } else if (jsonObject.getString(JsonFormUtils.KEY).equalsIgnoreCase(DBConstants.KEY.HOME_ADDRESS)) {
-
+/*
             String homeAddress = womanClient.get(DBConstants.KEY.HOME_ADDRESS);
             jsonObject.put(JsonFormUtils.VALUE, homeAddress);
             jsonObject.toString();
@@ -363,6 +363,12 @@ public class JsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
             if (StringUtils.isNotBlank(schoolFacilityHierarchyString)) {
                 jsonObject.put(JsonFormUtils.VALUE, schoolFacilityHierarchyString);
+            }*/
+
+//To Do re implement to hanlde tree widget with Tree implementation
+            String homeAddress = womanClient.get(DBConstants.KEY.Location);
+            if (StringUtils.isNotBlank(homeAddress)) {
+                jsonObject.put(JsonFormUtils.VALUE, homeAddress);
             }
 
         } else if (jsonObject.getString(JsonFormUtils.KEY).equalsIgnoreCase(Constants.KEY.PHOTO)) {

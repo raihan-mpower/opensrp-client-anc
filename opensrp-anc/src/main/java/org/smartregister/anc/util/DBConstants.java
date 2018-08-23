@@ -26,5 +26,6 @@ public class DBConstants {
         public static final String HOME_ADDRESS = "home_address";
         public static final String AGE = "age";
         public static final String REMINDERS = "reminders";
+        public static final String Location = "Location";
     }
 }
