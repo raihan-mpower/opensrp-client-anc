@@ -45,13 +45,13 @@ public class RegisterFramentModelTest extends BaseUnitTest {
     public void testMainSelect() {
 
         String mainCondition = "anc_id is not null";
-        String sql = "Select ec_woman.id as _id , ec_woman.relationalid , ec_woman.last_interacted_with , ec_woman.base_entity_id , ec_woman.first_name , ec_woman.last_name , ec_woman.anc_id , ec_woman.dob , ec_woman.phone_number , ec_woman.alt_name , ec_woman.date_removed FROM " + DBConstants.WOMAN_TABLE_NAME + " WHERE " + mainCondition + " ";
+        String sql = "Select ec_mother.id as _id , ec_mother.relationalid , ec_mother.last_interacted_with , ec_mother.base_entity_id , ec_mother.first_name , ec_mother.last_name , ec_mother.anc_id , ec_mother.dob , ec_mother.phone_number , ec_mother.alt_name , ec_mother.date_removed FROM " + DBConstants.WOMAN_TABLE_NAME + " WHERE " + mainCondition + " ";
 
         // With main condition
         String mainSelect = model.mainSelect(DBConstants.WOMAN_TABLE_NAME, mainCondition);
         Assert.assertEquals(mainSelect, sql);
 
-        sql = "Select ec_woman.id as _id , ec_woman.relationalid , ec_woman.last_interacted_with , ec_woman.base_entity_id , ec_woman.first_name , ec_woman.last_name , ec_woman.anc_id , ec_woman.dob , ec_woman.phone_number , ec_woman.alt_name , ec_woman.date_removed FROM " + DBConstants.WOMAN_TABLE_NAME;
+        sql = "Select ec_mother.id as _id , ec_mother.relationalid , ec_mother.last_interacted_with , ec_mother.base_entity_id , ec_mother.first_name , ec_mother.last_name , ec_mother.anc_id , ec_mother.dob , ec_mother.phone_number , ec_mother.alt_name , ec_mother.date_removed FROM " + DBConstants.WOMAN_TABLE_NAME;
 
         // Without main condition
         mainSelect = model.mainSelect(DBConstants.WOMAN_TABLE_NAME, "");

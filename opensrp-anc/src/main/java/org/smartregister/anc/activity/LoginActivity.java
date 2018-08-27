@@ -9,7 +9,11 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -34,6 +38,7 @@ import org.smartregister.anc.event.ViewConfigurationSyncCompleteEvent;
 import org.smartregister.anc.presenter.LoginPresenter;
 import org.smartregister.anc.task.SaveTeamLocationsTask;
 import org.smartregister.anc.util.Constants;
+import org.smartregister.anc.util.DebugUtils;
 import org.smartregister.util.Utils;
 
 import static org.smartregister.util.Log.logError;
@@ -56,7 +61,21 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        ////////
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(LoginActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(LoginActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(LoginActivity.this,
+                        new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
+            } else {
+                //do something
+            }
+        } else {
+            //do something
+        }
+        /////////////
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.black)));
@@ -145,15 +164,32 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     @Override
-    public void goToHome(boolean remote) {
+    public void goToHome(final boolean remote) {
         if (remote) {
             Utils.startAsyncTask(new SaveTeamLocationsTask(), null);
         }
-        Intent intent = new Intent(this, HomeRegisterActivity.class);
-        intent.putExtra(Constants.IS_REMOTE_LOGIN, remote);
-        startActivity(intent);
+        (new AsyncTask(){
+            @Override
+            protected Object doInBackground(Object[] params) {
+//                util.DebugUtils.backupDatabase(LoginActivity.this,"drishti.db");
+                DebugUtils.importDatabase(LoginActivity.this,"drishti.db");
+                return null;
+            }
 
-        finish();
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                Intent intent = new Intent(LoginActivity.this, HomeRegisterActivity.class);
+                intent.putExtra(Constants.IS_REMOTE_LOGIN, remote);
+                startActivity(intent);
+                finish();
+            }
+        }).execute();
+//        Intent intent = new Intent(this, HomeRegisterActivity.class);
+//        intent.putExtra(Constants.IS_REMOTE_LOGIN, remote);
+//        startActivity(intent);
+//
+//        finish();
     }
 
 

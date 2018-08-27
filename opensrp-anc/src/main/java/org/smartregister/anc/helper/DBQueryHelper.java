@@ -9,6 +9,7 @@ import org.smartregister.anc.util.DBConstants;
 public class DBQueryHelper {
 
     public static final String getHomePatientRegisterCondition() {
-        return DBConstants.KEY.DATE_REMOVED + " IS NULL ";
+//        return DBConstants.KEY.DATE_REMOVED + " IS NULL ";
+        return "";
     }
 }

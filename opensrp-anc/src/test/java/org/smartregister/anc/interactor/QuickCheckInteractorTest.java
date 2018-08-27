@@ -109,7 +109,7 @@ public class QuickCheckInteractorTest extends BaseUnitTest {
         Assert.assertEquals(locationId, eventJson.getString("locationId"));
         Assert.assertEquals(team, eventJson.getString("team"));
         Assert.assertEquals("Quick Check", eventJson.getString("eventType"));
-        Assert.assertEquals("ec_woman", eventJson.getString("entityType"));
+        Assert.assertEquals("ec_mother", eventJson.getString("entityType"));
 
         JSONArray obsArray = eventJson.getJSONArray("obs");
         JSONObject contactReason = obsArray.getJSONObject(0);
@@ -203,7 +203,7 @@ public class QuickCheckInteractorTest extends BaseUnitTest {
         Assert.assertEquals(locationId, eventJson.getString("locationId"));
         Assert.assertEquals(team, eventJson.getString("team"));
         Assert.assertEquals("Quick Check", eventJson.getString("eventType"));
-        Assert.assertEquals("ec_woman", eventJson.getString("entityType"));
+        Assert.assertEquals("ec_mother", eventJson.getString("entityType"));
 
         JSONArray obsArray = eventJson.getJSONArray("obs");
         JSONObject contactReason = obsArray.getJSONObject(0);
@@ -301,7 +301,7 @@ public class QuickCheckInteractorTest extends BaseUnitTest {
         Assert.assertEquals(locationId, eventJson.getString("locationId"));
         Assert.assertEquals(team, eventJson.getString("team"));
         Assert.assertEquals("Quick Check", eventJson.getString("eventType"));
-        Assert.assertEquals("ec_woman", eventJson.getString("entityType"));
+        Assert.assertEquals("ec_mother", eventJson.getString("entityType"));
 
         JSONArray obsArray = eventJson.getJSONArray("obs");
         JSONObject contactReason = obsArray.getJSONObject(0);

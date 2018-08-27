@@ -5,7 +5,7 @@ package org.smartregister.anc.util;
  */
 public class DBConstants {
 
-    public static final String WOMAN_TABLE_NAME = "ec_woman";
+    public static final String WOMAN_TABLE_NAME = "ec_mother";
 
     public static final class KEY {
         public static final String STEPNAME = "stepName";

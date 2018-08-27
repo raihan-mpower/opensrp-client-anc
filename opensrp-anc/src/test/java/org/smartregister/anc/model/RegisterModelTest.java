@@ -353,7 +353,7 @@ public class RegisterModelTest extends BaseUnitTest {
         Assert.assertEquals(providerId, event.getProviderId());
         Assert.assertEquals("ANC Registration", event.getEventType());
         Assert.assertEquals("LocationID", event.getLocationId());
-        Assert.assertEquals("ec_woman", event.getEntityType());
+        Assert.assertEquals("ec_mother", event.getEntityType());
         Assert.assertEquals(JsonFormUtils.formatDate("25-07-2018", true), event.getEventDate());
 
     }
